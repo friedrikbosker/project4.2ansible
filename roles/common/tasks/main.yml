@@ -17,11 +17,11 @@
     recurse: yes
 
 - name: epelrepo
-  package:
+  yum:
     name: epel-release
     state: present
 
 - name: clamav
-  package:
+  yum:
     name: clamav
     state: present
