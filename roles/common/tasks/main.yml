@@ -15,18 +15,13 @@
     owner: root
     group: root
     recurse: yes
-    
-- name: Install python & pip
-  yum:
-    name:
-      - python
-      - virtualenv
-      - setuptools
       
 - name: install python packages
-  pip:
-    name: libselinux-python
-    
+  yum:
+    name: 
+      - libselinux-python
+      - libsemanage-python
+
 - name: Disable SELinux
    selinux:
      state: disabled
