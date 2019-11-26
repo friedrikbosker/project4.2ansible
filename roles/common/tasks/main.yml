@@ -18,9 +18,9 @@
       
 
 - name: Disable SELinux
-   shell: |
-     setsebool -P antivirus_can_scan_system 1
-     setsebool -P clamd_use_jit 1
+  shell: |
+    setsebool -P antivirus_can_scan_system 1
+    setsebool -P clamd_use_jit 1
     
 - name: Install Epel Repository
   yum:
