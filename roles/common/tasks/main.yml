@@ -71,3 +71,9 @@
 
         [Install]
         WantedBy=multi-user.target
+- name: Start antivirus services
+  shell: |
+    systemctl enable clamd@scan
+    systemctl enable freshclam
+    systemctl start clamd@scan
+    systemctl start freshclam
