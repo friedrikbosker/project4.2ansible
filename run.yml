@@ -1,0 +1,12 @@
+- name: apply common to all
+  hosts: all
+  remote_user: root
+  become: yes
+  gather_facts: false
+
+
+    roles:
+    - common
+
+
+    
