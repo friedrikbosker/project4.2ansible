@@ -16,8 +16,8 @@
     group: root
     recurse: yes
 
--name: Disable SELinux
-  selinux:
+- name: Disable SELinux
+   selinux:
     state: disabled
     
 - name: Install Epel Repository
