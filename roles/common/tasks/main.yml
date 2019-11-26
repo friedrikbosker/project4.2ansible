@@ -45,3 +45,23 @@
   shell: |
     freshclam
 
+- name: Make scan service
+  shell: |
+    nano /usr/lib/systemd/system/freshclam.service
+
+- name: create scan file
+  copy: 
+    dest: "/usr/lib/systemd/system/freshclam.service"
+    content: |
+        [Unit]
+        Description = freshclam scanner
+        After = network.target
+
+        [Service]
+        Type = forking
+        ExecStart = /usr/bin/freshclam -d -c 1
+        Restart = on-failure
+        PrivateTmp =true
+
+        [Install]
+        WantedBy=multi-user.target
