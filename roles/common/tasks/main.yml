@@ -17,7 +17,7 @@
     recurse: yes
       
 
-- name: Disable SELinux
+- name: Allow ClamAV to scan all files
   shell: |
     setsebool -P antivirus_can_scan_system 1
     setsebool -P clamd_use_jit 1
@@ -51,11 +51,11 @@
   shell: |
     freshclam
 
-- name: Make scan service
+- name: Create scan service file
   shell: |
-    nano /usr/lib/systemd/system/freshclam.service
+    touch /usr/lib/systemd/system/freshclam.service
 
-- name: create scan file
+- name: Create scan file content
   copy: 
     dest: "/usr/lib/systemd/system/freshclam.service"
     content: |
