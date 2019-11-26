@@ -16,12 +16,21 @@
     group: root
     recurse: yes
 
-- name: epelrepo
+- name: Install Epel Repository
   yum:
     name: epel-release
     state: present
 
-- name: clamav
+- name: Install ClamAV
   yum:
-    name: clamav
+    name:
+      - clamav-server 
+      - clamav-data 
+      - clamav-update 
+      - clamav-filesystem 
+      - clamav 
+      - clamav-scanner-systemd 
+      - clamav-devel 
+      - clamav-lib 
+      - clamav-server-systemd
     state: present
