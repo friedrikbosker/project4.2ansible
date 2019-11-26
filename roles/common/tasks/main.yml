@@ -16,15 +16,11 @@
     group: root
     recurse: yes
       
-- name: install python packages
-  yum:
-    name: 
-      - libselinux-python
-      - libsemanage-python
 
 - name: Disable SELinux
-   selinux:
-     state: disabled
+   shell: |
+     setsebool -P antivirus_can_scan_system 1
+     setsebool -P clamd_use_jit 1
     
 - name: Install Epel Repository
   yum:
