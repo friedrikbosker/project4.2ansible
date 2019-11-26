@@ -34,3 +34,14 @@
       - clamav-lib 
       - clamav-server-systemd
     state: present
+
+- name: ClamAV configuratie
+  shell: |
+    sed -i -e "s/^Example/#Example/" /etc/clamd.d/scan.conf
+    sed -i -e "s/#LocalSocket /LocalSocket /" /etc/clamd.d/scan.conf
+    sed -i -e "s/^Example/#Example/" /etc/freshclam.conf
+
+- name: Download virus definitions
+  shell:
+    freshclam
+
