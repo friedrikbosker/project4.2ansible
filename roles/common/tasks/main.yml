@@ -42,6 +42,6 @@
     sed -i -e "s/^Example/#Example/" /etc/freshclam.conf
 
 - name: Download virus definitions
-  shell:
+  shell: |
     freshclam
 
