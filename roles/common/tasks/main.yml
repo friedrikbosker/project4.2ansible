@@ -16,6 +16,10 @@
     group: root
     recurse: yes
 
+-name: Disable SELinux
+  selinux:
+    state: disabled
+    
 - name: Install Epel Repository
   yum:
     name: epel-release
