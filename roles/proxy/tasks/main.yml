@@ -1,1 +1,52 @@
+- name: Installing squid proxy
+  yum:
+    name: squid
+    state: present
+    
+- name: start squid proxy
+  become: yes
+  become_user: root
+  service:
+    name: squid
+    state: started
+    enabled: yes
 
+- name: Installing httpd-tools
+  yum:
+    name: httpd-tools
+    state: present
+
+- name: Creating username storage
+  shell: |
+    touch /etc/squid/passwd
+    chown squid: /etc/squid/passwd
+    
+- name: Creating password
+  shell: |
+    htpasswd /etc/squid/passwd {{ squid_username }}
+    
+    expect "New password:"
+    send "{{ squid_password }}\n"
+    
+    expect "Re-type new password:"
+    send "{{ squid_password }}\n"
+
+
+- name: Create squid configuration
+  copy: 
+    dest: "/etc/squid/squid.conf"
+    content: |
+        auth_param basic program /usr/lib64/squid/basic_ncsa_auth /etc/squid/passwd
+        auth_param basic children 5
+        auth_param basic realm Squid Basic Authentication
+        auth_param basic credentialsttl 2 hours
+        acl auth_users proxy_auth REQUIRED
+        http_access allow auth_users
+        
+- name: Restarting squid
+  become: yes
+  become_user: root
+  service:
+    name: squid
+    state: restarted
+    enabled: yes
