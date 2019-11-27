@@ -1,1 +1,44 @@
+- name: install lamp stack
+  yum:
+    name:
+      - httpd
+      - mariadb-server
+      - mariadb
+      - php
+      - php-mysql
+      - php-pdo
+      - php-gd
+      - php-mbstring
+    state: present
+    update_cache: yes
 
+- name: start apache
+  become: yes
+  become_user: root
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+
+- name: start mysql
+  become: yes
+  become_user: root
+  service:
+    name: mysql
+    state: started
+    enabled: yes
+
+- name: create index.html
+  become: yes
+  become_user: root
+  copy: 
+    dest: "/var/wwww/html/index.html"
+    content: |
+      <html>
+       <head>
+        <title>PHP Test</title>
+       </head>
+       <body>
+       <?php echo '<p>Hello World</p>'; ?> 
+       </body>
+      </html>
