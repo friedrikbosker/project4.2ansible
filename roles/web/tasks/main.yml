@@ -5,7 +5,7 @@
       - mariadb-server
       - mariadb
       - php
-      - php-mysql
+      - php-mysqlnd
       - php-pdo
       - php-gd
       - php-mbstring
@@ -20,11 +20,11 @@
     state: started
     enabled: yes
 
-- name: start mysql
+- name: start mariadb
   become: yes
   become_user: root
   service:
-    name: mysql
+    name: mariadb
     state: started
     enabled: yes
 
@@ -36,9 +36,9 @@
     content: |
       <html>
        <head>
-        <title>PHP Test</title>
+        <title>testpagina</title>
        </head>
        <body>
-       <?php echo '<p>Hello World</p>'; ?> 
+       <?php echo '<p>ayy lmao</p>'; ?> 
        </body>
-      </html>
+      </html> 
