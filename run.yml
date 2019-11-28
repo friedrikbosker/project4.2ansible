@@ -3,9 +3,7 @@
   remote_user: root
   become: yes
   gather_facts: false
-
-
-    roles:
+  roles:
     - common
 
 
@@ -14,7 +12,5 @@
   remote_user: root
   become: yes
   gather_facts: false
-     
-    
-    roles:
+  roles:
     - ELE    
