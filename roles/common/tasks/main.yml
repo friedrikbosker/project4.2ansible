@@ -16,6 +16,9 @@
     group: root
     recurse: yes
       
+- name: Updating repositories
+  shell: |
+    yum -y update
 
 - name: Allow ClamAV to scan all files
   shell: |

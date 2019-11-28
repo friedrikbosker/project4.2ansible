@@ -32,7 +32,7 @@
   become: yes
   become_user: root
   copy: 
-    dest: "/var/wwww/html/index.html"
+    dest: "/var/www/html/index.html"
     content: |
       <html>
        <head>
