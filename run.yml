@@ -9,4 +9,13 @@
     - common
 
 
+- name: apply main.yml to ele
+  hosts: [ELE]
+  remote_user: root
+  become: yes
+  gather_facts: false
+     
     
+    
+    roles:
+    - ELE    
