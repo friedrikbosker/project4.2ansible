@@ -1,14 +1,14 @@
 [LDAP]
-10.5.1.12
+10.5.1.12 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012
 
 [LOGMONSIEM]
-10.5.1.13
+10.5.1.13 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012
 
 [MAILSTOR]
-10.5.1.14
+10.5.1.14 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012
 
 [ELE]
-10.5.1.15
+10.5.1.15 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012
 
 [PROXY]
-10.5.0.16
+10.5.0.16 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012
