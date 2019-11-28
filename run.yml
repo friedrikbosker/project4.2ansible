@@ -8,7 +8,7 @@
 
 
 - name: apply main.yml to ele
-  hosts: ELE
+  hosts: 10.5.1.15
   remote_user: root
   become: yes
   gather_facts: false
