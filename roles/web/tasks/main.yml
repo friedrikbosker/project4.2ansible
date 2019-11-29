@@ -28,11 +28,11 @@
     state: started
     enabled: yes
     
-- name: [WARNING] DISABLING FIREWALL
+- name: adding firewall ports
   become: yes
   become_user: root
   shell: |
-    sudo firewall-cmd ––permanent ––add-port=80/tcp
+    sudo firewall-cmd ––permanent ––add-port 80/tcp
     sudo firewall-cmd --reload
 
 - name: create index.html
