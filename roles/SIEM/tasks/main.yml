@@ -2,7 +2,7 @@
   become: yes
   become_user: root
   shell: |
-    - rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
 
 - name: create elasticsearch.repo
   become: yes
