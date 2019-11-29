@@ -31,8 +31,14 @@
     priv: '*.*:ALL'
     state: present
     
+- name: copy createtables template
+  template:
+    src: createtables
+    dest: /tmp/createtables
+    mode: "600"
+    
 - name: Import table structure from template
   mysql_db:
-    src: createtables
     name: mailserver
     state: import
+    target: /tmp/createtables
