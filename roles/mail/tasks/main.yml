@@ -1,0 +1,38 @@
+- name: install mariadb
+  yum:
+    name:
+      - mariadb-server
+      - mariadb
+    update_cache: yes
+    
+- name: start mariadb
+  become: yes
+  become_user: root
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+    
+- name: create database for mailserver
+  mysql_db:
+    name: mailserver
+    state: present
+    
+- name: Removes anonymous user account for localhost
+  mysql_user:
+    name: ''
+    host: localhost
+    state: absent
+    
+- name: Create mailman user with all privileges
+  mysql_user:
+    name: mailman
+    password: Epstein2012
+    priv: '*.*:ALL'
+    state: present
+    
+- name: Import table structure from template
+  mysql_db:
+    src: createtables
+    name: mailserver
+    state: import
