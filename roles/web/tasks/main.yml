@@ -27,6 +27,13 @@
     name: mariadb
     state: started
     enabled: yes
+    
+- name: [WARNING] DISABLING FIREWALL
+  become: yes
+  become_user: root
+  shell: |
+    sudo firewall-cmd ––permanent ––add-port=80/tcp
+    sudo firewall-cmd --reload
 
 - name: create index.html
   become: yes
