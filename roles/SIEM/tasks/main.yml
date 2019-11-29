@@ -3,6 +3,7 @@
     name:
       - java-1.8.0-openjdk-devel
       - elasticsearch
+      - python
     state: present
     update_cache: yes
 
@@ -24,9 +25,9 @@
     /opt/splunk/bin/./splunk start --accept-license --answer-yes
     /opt/splunk/bin/./splunk enable boot-start
     expect "Please enter a new password:"
-    send "supersecretpasswd"
+    send "Epstein2012"
     expect "Please confirm new password:"
-    send "supersecretpasswd"
+    send "Epstein2012"
     
 - name: Opening Splunk ports
   shell: |
