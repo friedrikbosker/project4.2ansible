@@ -1,8 +1,10 @@
-- name: install mariadb
+- name: install required packages
   yum:
     name:
       - mariadb-server
-      - mariadb
+      - postfix
+      - dovecot
+      - dovecot-mysql
     update_cache: yes
     
 - name: start mariadb
@@ -42,3 +44,40 @@
     name: mailserver
     state: import
     target: /tmp/createtables
+    
+- name: copy postfix config
+  template:
+    src: postfixconfig
+    dest: /etc/postfix/main.cf
+    mode: "600"
+    
+- name: copy mailboxdomains
+  template:
+    src: mailboxdomains
+    dest: /etc/postfix/mysql-virtual-mailbox-domains.cf
+    mode: "600"
+    
+- name: copy mailboxmaps
+  template:
+    src: mailboxmaps
+    dest: /etc/postfix/mysql-virtual-mailbox-maps.cf
+    mode: "600"
+    
+- name: copy aliasmaps
+  template:
+    src: aliasmaps
+    dest: /etc/postfix/mysql-virtual-alias-maps.cf
+    mode: "600"
+    
+- name: copy email2email
+  template:
+    src: email2email
+    dest: /etc/postfix/mysql-virtual-email2email.cf
+    mode: "600"
+    
+- name: restart postfix
+  become: yes
+  become_user: root
+  shell: |
+    systemctl restart postfix
+    

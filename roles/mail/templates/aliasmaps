@@ -1,0 +1,5 @@
+user = mailman
+password = Epstein2012
+hosts = 127.0.0.1
+dbname = mailserver
+query = SELECT destination FROM virtual_aliases WHERE source='%s'
