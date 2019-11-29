@@ -35,6 +35,10 @@
     name: elasticsearch
     state: started
     enabled: yes
+
+- name: Change elasticsearch config
+  shell: |
+    sed -i s/\#network\.host\:............/network\.host\:\ localhost/g /elasticsearch/elasticsearch.yml
     
 - name: Downloading Splunk Enterprise
   shell: |
@@ -44,13 +48,16 @@
   shell: |
     rpm -i splunk-8.0.0-1357bef0a7f6-linux-2.6-x86_64.rpm
     /opt/splunk/bin/./splunk start --accept-license --answer-yes
-    /opt/splunk/bin/./splunk enable boot-start
+    expect "Please enter an administrator username:"
+    send "root"
     expect "Please enter a new password:"
     send "Epstein2012"
     expect "Please confirm new password:"
     send "Epstein2012"
+    /opt/splunk/bin/./splunk enable boot-start
+    
     
 - name: Opening Splunk ports
   shell: |
-    firewall-cmd --permanent --add-port=8000/tcp
+    firewall-cmd --permanent --add-port 8000/tcp
     firewall-cmd --reload
