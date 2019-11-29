@@ -24,7 +24,7 @@
     name:
       - java-1.8.0-openjdk-devel
       - elasticsearch
-      - python
+      - python36
     state: present
     update_cache: yes
 
