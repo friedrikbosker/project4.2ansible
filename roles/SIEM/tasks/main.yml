@@ -1,3 +1,24 @@
+- name: importing elasticsearch gpg key
+  become: yes
+  become_user: root
+  shell: |
+    - rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+- name: create elasticsearch.repo
+  become: yes
+  become_user: root
+  copy: 
+    dest: "/etc/yum.repos.d/elasticsearch.repo"
+    content: |
+      [elasticsearch-6.x]
+      name=Elasticsearch repository for 6.x packages
+      baseurl=https://artifacts.elastic.co/packages/6.x/yum
+      gpgcheck=1
+      gpgkey=https://artifacts.elastic.co/GPG-KEY-elasticsearch
+      enabled=1
+      autorefresh=1
+      type=rpm-md    
+
 - name: Install elasticsearch
   yum:
     name:
