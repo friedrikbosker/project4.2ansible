@@ -38,7 +38,7 @@
 
 - name: Change elasticsearch config
   shell: |
-    sed -i s/\#network\.host\:............/network\.host\:\ localhost/g /elasticsearch/elasticsearch.yml
+    sed -i s/\#network\.host\:............/network\.host\:\ localhost/g /etc/elasticsearch/elasticsearch.yml
 
 - name: Rebooting
   shell: |
