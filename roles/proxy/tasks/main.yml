@@ -20,17 +20,14 @@
   shell: |
     touch /etc/squid/passwd
     chown squid: /etc/squid/passwd
-    
-- name: Creating password
-  shell: |
-    htpasswd /etc/squid/passwd {{ squid_username }}
-    
-    expect "New password:"
-    send "{{ squid_password }}\n"
-    
-    expect "Re-type new password:"
-    send "{{ squid_password }}\n"
 
+- name: Creating password and user
+  expect:
+    command: htpasswd /etc/squid/passwd proxyclient
+    responses:
+      "New password:": "Epstein2012"
+      "Re-type new password:": "Epstein2012"
+    timeout: null
 
 - name: Create squid configuration
   copy: 
