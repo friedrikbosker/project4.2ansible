@@ -41,15 +41,7 @@
     sed -i s/\#network\.host\:............/network\.host\:\ localhost/g /etc/elasticsearch/elasticsearch.yml
 
 - name: Rebooting
-  shell: |
-    reboot NOW
-
-- name: Wait for reboot
-  wait_for_connection:
-    connection_timeout: 20
-    sleep: 5
-    delay: 5
-    timeout: 300
+  reboot:
 
 - name: Downloading Splunk Enterprise
   shell: |
