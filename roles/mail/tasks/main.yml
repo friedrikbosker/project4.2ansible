@@ -5,6 +5,8 @@
       - postfix
       - dovecot
       - dovecot-mysql
+      - python36
+      - python3-PyMySQL
     update_cache: yes
     
 - name: start mariadb
