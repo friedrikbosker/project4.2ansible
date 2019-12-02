@@ -28,6 +28,10 @@
     state: present
     update_cache: yes
 
+- name: Install pexpect
+  shell: |
+    python3.6 -m pip install pexpect
+  
 - name: start elasticsearch
   become: yes
   become_user: root
@@ -55,6 +59,7 @@
       "Please enter an administrator username:": "root"
       "Please enter a new password:": "Epstein2012"
       "Please confirm new password:": "Epstein2012"
+    timeout: null
 
 - name: Starting Splunk Enterprise
   shell: |
