@@ -28,6 +28,10 @@
     state: present
     update_cache: yes
 
+- name: Install pexpect
+  shell: |
+    python3.6 -m pip install pexpect
+  
 - name: start elasticsearch
   become: yes
   become_user: root
@@ -43,22 +47,23 @@
 - name: Rebooting
   reboot:
 
-- name: Downloading Splunk Enterprise
-  shell: |
-    wget -O splunk-8.0.0-1357bef0a7f6-linux-2.6-x86_64.rpm "https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=8.0.0&product=splunk&filename=splunk-8.0.0-1357bef0a7f6-linux-2.6-x86_64.rpm&wget=true"
-    
+- name: Download Splunk Enterprise
+  get_url:
+    url: https://www.splunk.com/bin/splunk/DownloadActivityServlet?architecture=x86_64&platform=linux&version=8.0.0&product=splunk&filename=splunk-8.0.0-1357bef0a7f6-linux-2.6-x86_64.rpm&wget=true
+    dest: /tmp/splunkenterprise
+
 - name: Installing Splunk Enterprise
+  expect:
+    command: /opt/splunk/bin/./splunk start --accept-license --answer-yes
+    responses:
+      "Please enter an administrator username:": "root"
+      "Please enter a new password:": "Epstein2012"
+      "Please confirm new password:": "Epstein2012"
+    timeout: null
+
+- name: Starting Splunk Enterprise
   shell: |
-    rpm -i splunk-8.0.0-1357bef0a7f6-linux-2.6-x86_64.rpm
-    /opt/splunk/bin/./splunk start --accept-license --answer-yes
-    expect "Please enter an administrator username:"
-    send "root"
-    expect "Please enter a new password:"
-    send "Epstein2012"
-    expect "Please confirm new password:"
-    send "Epstein2012"
     /opt/splunk/bin/./splunk enable boot-start
-    
     
 - name: Opening Splunk ports
   shell: |
