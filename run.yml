@@ -16,9 +16,9 @@
     - web   
 
 - name: apply main.yml to siem
-  hosts: 10.5.1.13
+  hosts: 10.5.1.106
   remote_user: root
   become: yes
   gather_facts: false
   roles:
-    - SIEM  
+    - client  
