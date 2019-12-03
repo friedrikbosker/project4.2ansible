@@ -8,6 +8,17 @@
 - name: Setting the hostname
   shell: |
     hostname ipa-client.groep5uvd.nl
+
+- name: Opening Splunk ports
+  shell: |
+    firewall-cmd --permanent --add-port 80/tcp
+    firewall-cmd --permanent --add-port 88/tcp
+    firewall-cmd --permanent --add-port 88/udp
+    firewall-cmd --permanent --add-port 389/tcp
+    firewall-cmd --permanent --add-port 464/tcp
+    firewall-cmd --permanent --add-port 464/udp
+    firewall-cmd --permanent --add-port 123/tcp
+    firewall-cmd --reload
     
 - name: FreeIpa installation
   expect:
