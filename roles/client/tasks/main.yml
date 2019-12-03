@@ -4,8 +4,9 @@
     
 - name: Installing bind-utils
   yum:
-    - bind-utils
-    - freeipa-client
+    name:
+      - bind-utils
+      - freeipa-client
 
 - name: FreeIpa installation
   expect:
@@ -16,4 +17,4 @@
       "Proceed with fixed values and no DNS discovery? [no]:": "yes"
       "Continue to configure the system with these values? [no]:": "yes"
       "User authorized to enroll computers:": "admin"
-    timeout: null
+    timeout: 180
