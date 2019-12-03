@@ -3,12 +3,7 @@
     name: 
     - bind-utils
     - freeipa-client
-    - python36
   state: present
-  
-- name: Install pexpect
-  shell: |
-    python3.6 -m pip install pexpect
 
 - name: Setting the hostname
   shell: |
