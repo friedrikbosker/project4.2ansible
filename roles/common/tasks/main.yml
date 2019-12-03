@@ -42,7 +42,12 @@
       - clamav-devel 
       - clamav-lib 
       - clamav-server-systemd
+      - python36
     state: present
+
+- name: Install pexpect
+  shell: |
+    python3.6 -m pip install pexpect
 
 - name: ClamAV configuratie
   shell: |
@@ -74,6 +79,7 @@
 
         [Install]
         WantedBy=multi-user.target
+
 - name: Start antivirus services
   shell: |
     systemctl enable clamd@scan
