@@ -3,7 +3,7 @@
     hostname ipa-client.groep5uvd.nl
     
 - name: Installing bind-utils
-  yum
+  yum:
     name: 
     - bind-utils
     - freeipa-client
