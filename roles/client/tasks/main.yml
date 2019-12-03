@@ -3,7 +3,7 @@
     name: 
     - bind-utils
     - freeipa-client
-  state: present
+    state: present
 
 - name: Setting the hostname
   shell: |
