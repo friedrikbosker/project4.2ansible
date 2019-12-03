@@ -12,3 +12,6 @@
 
 [PROXY]
 10.5.1.16 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012
+
+[client]
+10.5.1.106 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012

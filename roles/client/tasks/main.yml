@@ -4,6 +4,7 @@
     
 - name: Installing bind-utils
   yum:
+    name: 
     - bind-utils
     - freeipa-client
 
