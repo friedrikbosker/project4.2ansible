@@ -1,13 +1,13 @@
-- name: Setting the hostname
-  shell: |
-    hostname ipa-client.groep5uvd.nl
-    
 - name: Installing bind-utils
   yum:
     name: 
     - bind-utils
     - freeipa-client
 
+- name: Setting the hostname
+  shell: |
+    hostname ipa-client.groep5uvd.nl
+    
 - name: FreeIpa installation
   expect:
     command: ipa-client-install --mkhomedir
