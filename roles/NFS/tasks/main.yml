@@ -1,0 +1,16 @@
+- name: Installing nfs packages
+  yum:
+    name:
+    - nfs-utils
+    - nfs-utils-lib
+    state: present
+
+- name: enabling required services
+  shell: |
+    chkconfig nfs on
+    service rpcbind start
+    service nfs start
+    service nfslock start
+    service rpcbind start
+
+
