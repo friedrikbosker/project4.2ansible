@@ -32,3 +32,5 @@
       "Continue to configure the system with these values? [no]:": "yes"
       "User authorized to enroll computers:": "admin"
     timeout: 180
+  become: yes
+  become_user: root
