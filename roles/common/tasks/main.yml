@@ -22,6 +22,11 @@
     regexp: '^PasswordAuthentication'
     line: PasswordAuthentication no
     state: present
+
+- name: restart sshd
+  service:
+    name: sshd
+    state: restarted
       
 - name: Updating repositories
   shell: |
