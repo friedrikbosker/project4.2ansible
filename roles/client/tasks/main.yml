@@ -7,7 +7,9 @@
 
 - name: Setting the hostname
   shell: |
-    hostname ipa-client.groep5uvd.nl
+    hostname g05-client02.groep5uvd.nl
+  become: yes
+  become_user: root
 
 - name: Opening Splunk ports
   shell: |
@@ -24,7 +26,7 @@
   expect:
     command: ipa-client-install --mkhomedir
     responses:
-      "Provide the domain name of your IPA server (ex: example.com):": "ipa.groep5uvd.nl"
+      "Provide the domain name of your IPA server (ex: example.com):": "groep5uvd.nl"
       "Provide your IPA server name (ex: ipa.example.com):": "g05-ipa.groep5uvd.nl"
       "Proceed with fixed values and no DNS discovery? [no]:": "yes"
       "Continue to configure the system with these values? [no]:": "yes"
