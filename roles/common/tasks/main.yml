@@ -18,9 +18,10 @@
 
 - name: turn off password authentication
   lineinfile:
-    path: /etc/ssh/ssh_config
-    regexp: '^#\ \ \PasswordAuthentication\ \yes'
-    line: PasswordAuthentication no  
+    path: /etc/ssh/sshd_config
+    regexp: '^PasswordAuthentication'
+    line: PasswordAuthentication no
+    state: present
       
 - name: Updating repositories
   shell: |
