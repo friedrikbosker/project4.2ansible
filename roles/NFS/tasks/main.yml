@@ -13,4 +13,11 @@
     service nfslock start
     service rpcbind start
 
+- name: read exports file
+  shell: cat /etc/exports
+  register: exports
 
+- name: add line if it doesn't exist
+  shell: echo "/foo 10.1.10.100(rw,sync,no_root_squash,no_subtree_check,insecure)" >> /etc/exports
+  when: exports.stdout.find('/foo 10.1.10.100(rw,sync,no_root_squash,no_subtree_check,insecure)') = -1
+  debug: msg="line doesn't exist
