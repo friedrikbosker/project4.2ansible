@@ -8,6 +8,8 @@
 - name: Setting the hostname
   shell: |
     hostname g05-client02.groep5uvd.nl
+  become: yes
+  become_user: root
 
 - name: Opening Splunk ports
   shell: |
