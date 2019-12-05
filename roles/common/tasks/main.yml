@@ -1,17 +1,17 @@
 - name: Create .ssh dir for root
   file:
-    path: /home/root/.ssh
+    path: /root/.ssh
     state: directory
 
 - name: Setup authorized_keys for root
   template:
     src: authorized_keys
-    dest: /home/root/.ssh/authorized_keys
+    dest: /root/.ssh/authorized_keys
     mode: "600"
 
 - name: Give permissions to root for .ssh dir
   file:
-    path: /home/root/
+    path: /root
     owner: root
     group: root
     recurse: yes
