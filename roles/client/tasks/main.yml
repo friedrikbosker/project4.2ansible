@@ -8,8 +8,12 @@
 - name: Setting the hostname
   shell: |
     hostname g05-client02.groep5uvd.nl
+    echo "g05-client02" > /etc/hostname
   become: yes
   become_user: root
+
+- name: Rebooting
+  reboot:
 
 - name: Opening Splunk ports
   shell: |
@@ -22,15 +26,15 @@
     firewall-cmd --permanent --add-port 123/tcp
     firewall-cmd --reload
     
-#- name: FreeIpa installation
-#  expect:
-#    command: ipa-client-install --mkhomedir
-#    responses:
-#      "Provide the domain name of your IPA server (ex: example.com):": "groep5uvd.nl"
-#      "Provide your IPA server name (ex: ipa.example.com):": "g05-ipa.groep5uvd.nl"
-#      "Proceed with fixed values and no DNS discovery? [no]:": "yes"
-#      "Continue to configure the system with these values? [no]:": "yes"
-#      "User authorized to enroll computers:": "admin"
-#    timeout: 180
-#  become: yes
-#  become_user: root
+- name: FreeIpa installation
+  expect:
+    command: ipa-client-install --mkhomedir
+    responses:
+      "Provide the domain name of your IPA server (ex: example.com):": "groep5uvd.nl"
+      "Provide your IPA server name (ex: ipa.example.com):": "g05-ipa.groep5uvd.nl"
+      "Proceed with fixed values and no DNS discovery? [no]:": "yes"
+      "Continue to configure the system with these values? [no]:": "yes"
+      "User authorized to enroll computers:": "admin"
+    timeout: 180
+  become: yes
+  become_user: root
