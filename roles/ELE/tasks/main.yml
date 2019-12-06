@@ -24,10 +24,14 @@
     priv: '*.*:ALL'
     state: present
 
+- name: Unarchive Moodle
+  unarchive:
+    src: https://download.moodle.org/download.php/stable38/moodle-latest-38.tgz
+    dest: /var/www/html
+    remote_src: yes
+
 - name: Preparing the Moodle program files
   become: yes
   become_user: root
   shell: |
-    wget https://download.moodle.org/download.php/stable38/moodle-latest-38.tgz
-    tar xvzf moodle-latest-38.tgz -C /var/www/html/
     chown -R apache:apache /var/www/
