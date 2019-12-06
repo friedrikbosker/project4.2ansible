@@ -30,7 +30,7 @@
   lineinfile:
     path: /etc/hosts
     regexp: '^10\.5\.1\.12'
-    line: '10.5.1.12 g05-ipa.groep5uvd.nl
+    line: '10.5.1.12 g05-ipa.groep5uvd.nl'
     owner: root
     group: root
     mode: 0644
