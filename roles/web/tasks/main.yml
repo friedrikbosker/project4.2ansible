@@ -9,6 +9,7 @@
       - php-pdo
       - php-gd
       - php-mbstring
+      - php-pecl-zip
       - python36
     state: present
     update_cache: yes
@@ -35,18 +36,3 @@
   shell: |
     firewall-cmd ––permanent ––add-port 80/tcp
     firewall-cmd --reload
-
-- name: create index.html
-  become: yes
-  become_user: root
-  copy: 
-    dest: "/var/www/html/index.html"
-    content: |
-      <html>
-       <head>
-        <title>testpagina</title>
-       </head>
-       <body>
-       <?php echo '<p>ayy lmao</p>'; ?> 
-       </body>
-      </html> 
