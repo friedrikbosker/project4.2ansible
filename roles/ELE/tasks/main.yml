@@ -1,1 +1,33 @@
+- name: install python
+  yum:
+    name:
+      - python36
+      - python3-PyMySQL
+    state: present
+    update_cache: yes
 
+- name: create database for moodle
+  mysql_db:
+    name: moodle
+    state: present
+    
+- name: Removes anonymous user account for localhost
+  mysql_user:
+    name: ''
+    host: localhost
+    state: absent
+    
+- name: Create moodle user with all privileges
+  mysql_user:
+    name: moodleman
+    password: Epstein2012
+    priv: '*.*:ALL'
+    state: present
+
+- name: Preparing the Moodle program files
+  become: yes
+  become_user: root
+  shell: |
+    wget https://download.moodle.org/download.php/stable38/moodle-3.8.tgz
+    sudo tar xvzf moodle-latest-38.tgz -C /var/www/html/
+    sudo chown -R apache:apache /var/www/

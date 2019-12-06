@@ -9,6 +9,7 @@
       - php-pdo
       - php-gd
       - php-mbstring
+      - python36
     state: present
     update_cache: yes
 
@@ -27,32 +28,6 @@
     name: mariadb
     state: started
     enabled: yes
-    
-- name: create database for moodle
-  mysql_db:
-    name: moodle
-    state: present
-    
-- name: Removes anonymous user account for localhost
-  mysql_user:
-    name: ''
-    host: localhost
-    state: absent
-    
-- name: Create moodle user with all privileges
-  mysql_user:
-    name: moodleman
-    password: Epstein2012
-    priv: '*.*:ALL'
-    state: present
-
-- name: Preparing the Moodle program files
-  become:yes
-  become_user: root
-  shell: |
-    wget https://download.moodle.org/download.php/direct/stable32/moodle-3.2.1.tgz
-    sudo tar -zxvf moodle-3.2.1.tgz -C /var/www/html
-    sudo chown -R root:root /var/www/html/moodle
   
 - name: adding firewall ports
   become: yes
