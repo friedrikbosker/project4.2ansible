@@ -28,4 +28,4 @@
  
 - name: FreeIpa installation
   shell: |
-    ipa-client-install --unattended --hostname g05-client02.groep5uvd.nl --server g05-ipa.groep5uvd.nl --domain groep5uvd.nl --password Epstein2012
+    ipa-client-install --unattended --hostname g05-client02.groep5uvd.nl --server g05-ipa.groep5uvd.nl --domain groep5uvd.nl --password Epstein2012 --realm GROEP5UVD.NL -p admin --mkhomedir --force-join
