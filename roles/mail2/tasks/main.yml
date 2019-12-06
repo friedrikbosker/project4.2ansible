@@ -1,0 +1,173 @@
+- name: Install required packages
+  yum:
+   name:
+    - postfix
+	
+- name Enable LDAP virtual alias maps
+  shell: |
+    postconf -e 'virtual_alias_domains = groep5uvd.nl'
+    postconf -e 'virtual_alias_maps = ldap:/etc/postfix/ldap_aliases.cf
+	
+- name Create the /etc/postfix/ldap_aliases.cf
+  template:
+    src: ldap_aliases.cf
+    dest: /etc/postfix/ldap_aliases.cf
+    mode: "600"
+	
+- name Hash ldap_aliases.cf
+  command: postmap /etc/postfix/ldap_aliases.cf
+
+- name Correct the SELinux contexts
+  command: restorecon -R /etc/postfix/
+
+- name Restart postfix
+  command: service postfix restart
+  
+- name Setting up Single Sign on for authentication on IPA
+  hosts: 10.5.1.12
+  remote_user: root
+  sudo: yes
+    command: ipa service-add smtp/g05-mailstor.groep5uvd.nl
+  
+- name Download service principle to Postfix server
+  shell: |
+    ipa-getkeytab -s g05-ipa.groep5uvd.nl -p smtp/g05-mailstor.groep5uvd.nl -k /etc/postfix/smtp.keytab
+    chown root:mail /etc/postfix/smtp.keytab
+    chmod 640 /etc/postfix/smtp.keytab
+
+- name Configure SASL
+  template:
+    src: smtpd.conf
+    dest: /etc/sasl2/smtpd.conf
+    mode: "600"
+
+- name configure Postfix for SASL integration
+  shell: | 
+    postconf -e 'import_environment = MAIL_CONFIG MAIL_DEBUG MAIL_LOGTAG TZ XAUTHORITY DISPLAY LANG=C KRB5_KTNAME=/etc/postfix/smtp.keytab'
+    postconf -e 'smptd_client_restrictions = permit_sasl_authenticated, reject'
+    postconf -e 'smtpd_recipient_restrictions = permit_sasl_authenticated, reject'
+    postconf -e 'smtpd_sender_restrictions = permit_sasl_authenticated, reject'
+    postconf -e 'smtpd_sasl_auth_enable = yes'
+    postconf -e 'smtpd_sasl_security_options = noanonymous'
+    postconf -e 'smtpd_sasl_tls_security_options = $smtpd_sasl_security_options'
+    postconf -e 'broken_sasl_auth_clients = yes'
+    postconf -e 'smtpd_sasl_authenticated_header = yes'
+    postconf -e 'smtpd_sasl_local_domain = $mydomain'
+    
+ - name: Restart services
+   shell: |
+     service saslauthd restart
+     service postfix restart
+     chkconfig saslauthd on
+     
+- name: Create certificate directory and request the certificate
+   shell: |
+     mkdir /etc/postfix-certs
+     chcon -t cert_t /etc/postfix-certs
+     ipa-getcert request -r -f /etc/postfix-certs/smtp.crt -k /etc/postfix-certs/smtp.key -N CN=g05-mailstor.groep5uvd.nl -D g05-mailstor.groep5uvd.nl -K smtp/g05-mailstor.groep5uvd.nl
+     
+- name: Configure certificate for postfix
+   shell: |
+     postconf -e 'smtpd_tls_auth_only = yes'
+     postconf -e 'smtpd_tls_key_file = /etc/postfix-certs/smtp.key'
+     postconf -e 'smtp_tls_cert_file = /etc/postfix-certs/smtp.crt'
+     postconf -e 'smtpd_tls_received_header = yes'
+     postconf -e 'smtpd_tls_session_cache_timeout = 3600s'
+
+- name Restart postfix
+  command: service postfix restart
+  
+  - name: Install required packages
+  yum:
+   name:
+    - dovecot
+	
+- name: Set dovecot to start at boot
+  command: systemctl enable dovecot
+
+- name: Edit /etc/dovecot/dovecot.conf to allow imap
+  lineinfile: 
+    path: /etc/dovecot/dovecot.conf
+    regexp: '#protocols = imap pop3 lmtp'
+    line: 'protocols = imap'
+
+- name: Edit /etc/dovecot/conf.d/10-auth.conf to configure kerberos authentication
+  lineinfile:
+    path: /etc/dovecot/conf.d/10-auth.conf
+    insertafter: EOF
+    line: 'userdb {
+            driver = static
+            args = uid=dovecot gid=dovecot home=/var/spool/mail/%u
+           }'
+
+- name: Edit auth_mechanims variable in /etc/dovecot/conf.d/10-auth.conf
+  lineinfile:
+    path: /etc/dovecot/conf.d/10-auth.conf
+    regexp: 'auth_mechanims = plain'
+    line: 'auth_mechanims = gssapi
+	
+- name: Edit auth_gssapi_hostname variable in /etc/dovecot/conf.d/10-auth.conf
+  lineinfile:
+    path: /etc/dovecot/conf.d/10-auth.conf
+    regexp: '#auth-gssapi_hostname ='
+    line: 'auth-gssapi_hostname = g05-mailstor.groep5uvd.nl'
+
+- name: Edit auth_krb5_keytab variable in /etc/dovecot/conf.d/10-auth.conf
+  lineinfile:
+    path: /etc/dovecot/conf.d/10-auth.conf
+    regexp: '#auth_krb5_keytab ='
+    line: 'auth_krb5_keytab = /etc/dovecot/krb5.keytab'
+
+- name: Edit auth_realms variable in /etc/dovecot/conf.d/10-auth.conf
+  lineinfile:
+    path: /etc/dovecot/conf.d/10-auth.conf
+    regexp: '#auth_realms ='
+    line: 'auth_realms = groep5uvd.nl'
+
+- name: Edit auth_default_realm variable in /etc/dovecot/conf.d/10-auth.conf
+  lineinfile:
+    path: /etc/dovecot/conf.d/10-auth.conf
+    regexp: '#auth_default_realm ='
+    line: 'auth_default_realm = groep5uvd.nl'
+
+- name: Create new directory for user mailboxes
+  shell: |
+    mkdir /mail
+    chmod 770 /mail
+    chgrp mailusers /mail
+    chcon -t user_home_t /mail
+
+- name: Edit /etc/dovecot/conf.d/10-mail.conf to configure the mailbox location
+  lineinfile:
+    path: /etc/dovecot/conf.d/10-mail.conf
+    regexp: '#mail_location ='
+    line: 'mail_location = mbox:/mail/%u/:INBOX=/var/mail/%u
+			
+- name: Generate a kerberos keytab for dovecot IMAP access
+  hosts: 10.5.1.12
+  remote_user: root
+  sudo: yes
+  tasks:
+    - name: kinit admin
+      expect: 
+        command: kinit admin
+        responses:
+          "Password for admin@GROEP5UVD.NL:": "Epstein2012"
+        command: ipa service-add imap/g05-mailstor.groep5uvd.nl
+        command: exit
+  command: kinit admin
+  expect:
+    command: kinit admin
+    responses:
+      "Password for admin@GROEP5UVD.NL:": "Epstein2012"
+    command: ipa-getkeytab -s g05-ipa.groep5uvd.nl -p imap/g05-mailstor.groep5uvd.nl -k /etc/dovecot/krb5.keytab
+	  
+- name: Change the permissions of the keytab to allow Dovecot to read the file
+  shell: |
+    chown root:dovecot /etc/dovecot/krb5.keytab
+    chmod 640 /etc/dovecot/krb5.keytab
+   
+- name: Restart Dovecot
+  command: service dovecot restart
+     
+     
