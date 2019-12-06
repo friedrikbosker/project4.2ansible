@@ -26,11 +26,15 @@
     firewall-cmd --permanent --add-port 123/tcp
     firewall-cmd --reload
 
-- name: domainname
-  prompt: "Provide the domain name of your IPA server:"
-  private: no
+vars_prompt:
 
-- name: FreeIpa installation
+  - name: domainname
+    prompt: "Provide the domain name of your IPA server:"
+    private: no
+
+tasks:
+
+  - name: FreeIpa installation
   expect:
     command: ipa-client-install --mkhomedir
     responses:
@@ -39,6 +43,6 @@
       "Proceed with fixed values and no DNS discovery? [no]:": "yes"
       "Continue to configure the system with these values? [no]:": "yes"
       "User authorized to enroll computers:": "admin"
-    timeout: 180
+    timeout: null
   become: yes
   become_user: root
