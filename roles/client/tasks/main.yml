@@ -25,6 +25,15 @@
     firewall-cmd --permanent --add-port 464/udp
     firewall-cmd --permanent --add-port 123/tcp
     firewall-cmd --reload
+
+- name: Adding IPA server to host file
+  lineinfile:
+    path: /etc/hosts
+    regexp: '^10\.5\.1\.12'
+    line: '10.5.1.12 g05-ipa.groep5uvd.nl
+    owner: root
+    group: root
+    mode: 0644
  
 - name: FreeIpa installation
   shell: |
