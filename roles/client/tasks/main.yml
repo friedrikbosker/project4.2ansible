@@ -25,25 +25,7 @@
     firewall-cmd --permanent --add-port 464/udp
     firewall-cmd --permanent --add-port 123/tcp
     firewall-cmd --reload
-
-- hosts: all
-  vars_prompt:
-  
-    - name: domainname
-      prompt: "Provide the domain name of your IPA server:"
-      private: no
-  
-  tasks:
-  
-    - name: FreeIpa installation
-      expect:
-        command: ipa-client-install --mkhomedir
-        responses:
-          "Provide the domain name of your IPA server (ex: example.com):": '{{ domainname }}'
-          "Provide your IPA server name (ex: ipa.example.com):": "g05-ipa.groep5uvd.nl"
-          "Proceed with fixed values and no DNS discovery? [no]:": "yes"
-          "Continue to configure the system with these values? [no]:": "yes"
-          "User authorized to enroll computers:": "admin"
-        timeout: null
-      become: yes
-      become_user: root
+ 
+- name: FreeIpa installation
+  shell: |
+    ipa-client-install --unattended --hostname g05-client02.groep5uvd.nl --server g05-ipa.groep5uvd.nl --domain groep5uvd.nl --password Epstein2012
