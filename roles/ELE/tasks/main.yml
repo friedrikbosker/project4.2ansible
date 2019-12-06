@@ -28,6 +28,6 @@
   become: yes
   become_user: root
   shell: |
-    wget https://download.moodle.org/download.php/direct/stable32/moodle-3.2.1.tgz
-    sudo tar -zxvf moodle-3.2.1.tgz -C /var/www/html
-    sudo chown -R root:root /var/www/html/moodle
+    wget https://download.moodle.org/stable34/moodle-latest-34.tgz
+    sudo tar xvzf moodle-latest-34.tgz -C /var/www/html/
+    sudo chown -R apache:apache /var/www/
