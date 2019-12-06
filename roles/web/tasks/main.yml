@@ -10,7 +10,6 @@
       - php-gd
       - php-mbstring
       - python36
-      - python
     state: present
     update_cache: yes
 
