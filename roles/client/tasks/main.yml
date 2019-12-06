@@ -26,12 +26,9 @@
     firewall-cmd --permanent --add-port 123/tcp
     firewall-cmd --reload
 
-vars_prompt:
-  
-  
-  - name: domainname
-    prompt: "Provide the domain name of your IPA server:"
-    private: no
+- name: domainname
+  prompt: "Provide the domain name of your IPA server:"
+  private: no
 
 - name: FreeIpa installation
   expect:
