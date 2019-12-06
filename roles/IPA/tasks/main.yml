@@ -1,0 +1,15 @@
+- name: Setting up Single Sign On for authentication on IPA
+  shell: |
+    ipa service-add smtp/g05-mailstor.groep5uvd.nl
+
+- name: Generate a kerberos keytab for dovecot IMAP access
+  expect:
+    command: kinit admin
+    responses:
+      "Password for admin@GROEP5UVD.NL:": "Epstein2012"
+
+- name: add ipa service
+  shell: |
+  ipa service-add imap/g05-mailstor.groep5uvd.nl
+  ipa-getkeytab -s g05-ipa.groep5uvd.nl -p imap/g05-mailstor.groep5uvd.nl -k /etc/dovecot/krb5.keytab
+
