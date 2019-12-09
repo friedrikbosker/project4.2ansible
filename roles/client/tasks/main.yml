@@ -38,7 +38,7 @@
 
 - name: Make sure IPA client is not installed
   shell: |
-    ipa-client --uninstall
+    ipa-client-install --uninstall
  
 - name: FreeIpa installation
   shell: |
