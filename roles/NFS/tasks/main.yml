@@ -7,16 +7,30 @@
 
 - name: enabling required services
   shell: |
+    systemctl enable --now nfs-server
     chkconfig nfs on
     service rpcbind start
     service nfs start
     service nfslock start
     service rpcbind start
 
-- name: read exports file
-  shell: cat /etc/exports
-  register: exports
+- name: create share directory
+  shell: | 
+    mkdir -p /srv/nfs4/share    
+ 
+- name: load exports template
+  template:
+    src: exportsfile
+    dest: /etc/exports
+    mode: 600
 
-- name: add line if it does not exist
-  shell: echo "/foo 10.1.10.100(rw,sync,no_root_squash,no_subtree_check,insecure)" >> /etc/exports
-  when: exports.stdout.find('/foo 10.1.10.100(rw,sync,no_root_squash,no_subtree_check,insecure)') = -1
+- name: load exports changes
+  shell: |
+    exportfs -ra
+
+- name: allow access through firewall
+  shell: |
+    firewall-cmd --new-zone=nfs --permanent
+    firewall-cmd --zone=nfs --add-service=nfs --permanent
+    firewall-cmd --zone=nfs --add-source=10.5.1.0/24 --permanent
+    firewall-cmd --reload
