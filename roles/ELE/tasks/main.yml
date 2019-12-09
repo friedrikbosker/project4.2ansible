@@ -34,4 +34,5 @@
   become_user: root
   shell: |
     sudo tar -zxvf /tmp/moodle-latest-38.tgz -C /var/www/html
+    mv /var/www/html/moodle/* /var/www/html
     chown -R apache:apache /var/www/
