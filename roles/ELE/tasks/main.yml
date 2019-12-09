@@ -26,12 +26,12 @@
 
 - name: Download moodle
   get_url:
-    url: https://download.moodle.org/download.php/stable38/moodle-latest-38.tgz
+    url: https://sourceforge.net/projects/moodle/files/Moodle/stable38/moodle-latest-38.tgz/download
     dest: /tmp/
 
 - name: Preparing the Moodle program files
   become: yes
   become_user: root
   shell: |
-    sudo tar -zxvf moodle-latest-38.tgz -C /var/www/html
+    sudo tar -zxvf /tmp/moodle-latest-38.tgz -C /var/www/html
     chown -R apache:apache /var/www/
