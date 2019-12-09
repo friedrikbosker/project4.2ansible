@@ -10,6 +10,7 @@
       - php-gd
       - php-mbstring
       - php-pecl-zip
+      - php-json
       - python36
     state: present
     update_cache: yes
