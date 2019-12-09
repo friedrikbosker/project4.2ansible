@@ -26,7 +26,7 @@
 
 - name: Download moodle
   get_url:
-    url: https://sourceforge.net/projects/moodle/files/Moodle/stable38/moodle-latest-38.tgz/download
+    url: https://downloads.sourceforge.net/project/moodle/Moodle/stable38/moodle-latest-38.tgz?r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fmoodle%2Ffiles%2FMoodle%2Fstable38%2Fmoodle-latest-38.tgz%2Fdownload&ts=1575888738&use_mirror=autoselect
     dest: /tmp/
 
 - name: Preparing the Moodle program files
