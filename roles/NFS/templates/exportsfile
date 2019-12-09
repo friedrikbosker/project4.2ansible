@@ -1,1 +1,1 @@
-/srv/nfs4	10.5.1.0/24(fsid=0,rw,sync,no_subtree_check,crossmnt)
+/srv/nfs4	10.5.1.0/24(fsid=0,rw,sync,no_root_squash,no_subtree_check,crossmnt)
