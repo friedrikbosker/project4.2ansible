@@ -27,15 +27,11 @@
 - name: Download moodle
   get_url:
     url: https://download.moodle.org/download.php/stable38/moodle-latest-38.tgz
-    dest: /tmp
-
-- name: Unarchive Moodle
-  unarchive:
-    src: /tmp
-    dest: /var/www/html
+    dest: /tmp/
 
 - name: Preparing the Moodle program files
   become: yes
   become_user: root
   shell: |
+    sudo tar -zxvf moodle-latest-38.tgz -C /var/www/html
     chown -R apache:apache /var/www/
