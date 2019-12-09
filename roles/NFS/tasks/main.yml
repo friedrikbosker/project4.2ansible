@@ -2,7 +2,7 @@
   yum:
     name:
     - nfs-utils
-    - nfs-utils-lib
+    - libnfs-utils
     state: present
 
 - name: enabling required services
