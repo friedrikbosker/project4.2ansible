@@ -36,7 +36,7 @@
     group: root
     mode: 0644
 
-- name: Make sure IPA client is not installed:
+- name: Make sure IPA client is not installed
   shell: |
     ipa-client --uninstall
  
