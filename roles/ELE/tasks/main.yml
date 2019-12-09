@@ -24,11 +24,15 @@
     priv: '*.*:ALL'
     state: present
 
+- name: Download moodle
+  get_url:
+    url: https://download.moodle.org/download.php/stable38/moodle-latest-38.tgz
+    dest: /tmp
+
 - name: Unarchive Moodle
   unarchive:
-    src: https://download.moodle.org/download.php/stable38/moodle-latest-38.tgz
+    src: /tmp
     dest: /var/www/html
-    remote_src: yes
 
 - name: Preparing the Moodle program files
   become: yes
