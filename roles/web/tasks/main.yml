@@ -11,6 +11,7 @@
       - php-mbstring
       - php-pecl-zip
       - php-json
+      - php-xml
       - python36
     state: present
     update_cache: yes
