@@ -17,6 +17,7 @@
 10.5.1.105 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012 hostname=g05-client01.groep5uvd.net
 10.5.1.106 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012 hostname=g05-client02.groep5uvd.net
 10.5.1.107 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012 hostname=g05-client03.groep5uvd.net
+10.5.1.108 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012 hostname=g05-client04.groep5uvd.net
 
 [MAILSTOR02]
 10.5.1.40 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012
