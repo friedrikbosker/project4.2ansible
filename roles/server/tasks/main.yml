@@ -1,0 +1,58 @@
+- name: Import Elastic Repo
+  shell: |
+    rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
+    
+- name: Import repo file
+  template:
+    src: elasticsearchrepo
+    dest: /etc/yum.repos.d/elasticsearch.repo
+    mode: 0644
+    
+- name: Install required packages
+  yum:
+    name:
+    - filebeat
+    state: present
+    
+- name: Edit filebeat.yml
+  lineinfile:
+    path: /etc/filebeat/filebeat.yml
+    regexp: '^output/.elasticsearch/:'
+    line: '#output.elasticsearch:'
+    owner: root
+    group: root
+    mode: 0644
+    
+- name: Edit filebeat.yml
+  lineinfile:
+    path: /etc/filebeat/filebeat.yml
+    regexp: '^/ / hosts:/ /[/"localhost/:9200/]'
+    line: '#output.elasticsearch: [localhost:9200]'
+    owner: root
+    group: root
+    mode: 0644 
+    
+- name: Edit filebeat.yml
+  lineinfile:
+    path: /etc/filebeat/filebeat.yml
+    regexp: '^/#output/.logstash/:'
+    line: 'output.logstash:'
+    owner: root
+    group: root
+    mode: 0644 
+
+- name: Edit filebeat.yml
+  lineinfile:
+    path: /etc/filebeat/filebeat.yml
+    regexp: '^/ / /#hosts:/ /[/"localhost/:5044/]'
+    line: 'hosts: ["10.5.1.13:5044"]'
+    owner: root
+    group: root
+    mode: 0644     
+    
+- name: run filebeat commands
+  shell : |
+    filebeat modules enable system
+    systemctl enable filebeat
+    systemtl start filebeat
+    
