@@ -50,8 +50,8 @@
   shell: |
     apachectl configtest
     systemctl restart httpd
-    semanage fcontext -a -t httpd_sys_content_t "/usr/share/phpmyadmin(/.*)?"
-    restorecon -Rv /usr/share/phpmyadmin
+    semanage fcontext -a -t httpd_sys_content_t "/usr/share/phpMyAdmin(/.*)?"
+    restorecon -Rv /usr/share/phpMyAdmin
     
 
 - name: start mariadb
