@@ -25,7 +25,7 @@
 - name: Configuring PhpMyAdmin
   shell: |
     cp -pr /usr/share/phpMyAdmin/config.sample.inc.php /usr/share/phpMyAdmin/config.inc.php
-    sed -i -E "s/(?:\$cfg\[\'blowfish_secret\'\]\ \=\ \'\'\;)/$cfg['blowfish_secret'] = 'tu.88b/RHS-5K0Ut5fysBLUX:G;OFXtG';/g"
+    sed -i -E "s/(?:\$cfg\[\'blowfish_secret\'\]\ \=\ \'\'\;)/$cfg['blowfish_secret'] = 'tu.88b/RHS-5K0Ut5fysBLUX:G;OFXtG';/g" /usr/share/phpMyAdmin/config.inc.php
     
 
 - name: start apache
