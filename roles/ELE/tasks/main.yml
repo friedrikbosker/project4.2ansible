@@ -41,3 +41,9 @@
     chmod -R 777 /moodle
     semanage fcontext -a -t httpd_sys_rw_content_t "/moodle/moodledata(/.*)?"
     restorecon -R /moodle/moodledata
+
+- name: Add moodle config
+  template:
+    src: moodleconfig
+    dest: /var/www/html/config.php
+    mode: 777
