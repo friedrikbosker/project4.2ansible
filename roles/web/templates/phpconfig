@@ -11,10 +11,10 @@ Alias /phpmyadmin /usr/share/phpmyadmin/
    </IfModule>
    <IfModule !mod_authz_core.c>
      # Apache 2.2
-     Order Deny,Allow
-     Deny from All
+     Order Allow,Deny
      Allow from 127.0.0.1
      Allow from ::1
 	 Allow from 10.5.1.106/24
+	 Deny from All
    </IfModule>
 </Directory>
