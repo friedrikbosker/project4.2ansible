@@ -16,6 +16,17 @@
     state: present
     update_cache: yes
 
+- name: Installing PhpMyAdmin
+  shell: |
+    wget https://files.phpmyadmin.net/phpMyAdmin/4.9.2/phpMyAdmin-4.9.2-english.tar.gz
+    tar -zxvf phpMyAdmin-4.9.2-english.tar.gz
+    mv phpMyAdmin-4.9.2-english /usr/share/phpMyAdmin
+    
+#- name: Configuring PhpMyAdmin
+#  shell: |
+#    cp -pr /usr/share/phpMyAdmin/config.sample.inc.php /usr/share/phpMyAdmin/config.inc.php
+    
+
 - name: start apache
   become: yes
   become_user: root
