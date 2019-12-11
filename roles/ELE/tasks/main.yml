@@ -53,41 +53,41 @@
     systemctl restart httpd
     systemctl restart mysqld
  
- - name: Adding dbtype
-   lineinfile:
-     path: /var/www/html/config-dist.php
-     regexp: "dbtype"
-     line: "$CFG->dbtype    = 'mariadb';"
+- name: Adding dbtype
+  lineinfile:
+    path: /var/www/html/config-dist.php
+    regexp: "dbtype"
+    line: "$CFG->dbtype    = 'mariadb';"
     
- - name: Adding dbname
-   lineinfile:
-     path: /var/www/html/config-dist.php
-     regexp: "dbname"
-     line: "$CFG->dbname    = 'moodle';"
+- name: Adding dbname
+  lineinfile:
+    path: /var/www/html/config-dist.php
+    regexp: "dbname"
+    line: "$CFG->dbname    = 'moodle';"
 
- - name: Adding dbuser
-   lineinfile:
-     path: /var/www/html/config-dist.php
-     regexp: "dbuser"
-     line: "$CFG->dbuser    = 'moodleman';"
+- name: Adding dbuser
+  lineinfile:
+    path: /var/www/html/config-dist.php
+    regexp: "dbuser"
+    line: "$CFG->dbuser    = 'moodleman';"
  
-  - name: Adding dbpass
-    lineinfile:
-      path: /var/www/html/config-dist.php
-      regexp: "dbpass"
-      line: "$CFG->dbpass    = 'Epstein2012';"
+- name: Adding dbpass
+  lineinfile:
+    path: /var/www/html/config-dist.php
+    regexp: "dbpass"
+    line: "$CFG->dbpass    = 'Epstein2012';"
 
- - name: Adding wwwroot
-   lineinfile:
-     path: /var/www/html/config-dist.php
-     regexp: "wwwroot"
-     line: "$CFG->wwwroot    = 'http://10.5.1.15';"
+- name: Adding wwwroot
+  lineinfile:
+    path: /var/www/html/config-dist.php
+    regexp: "wwwroot"
+    line: "$CFG->wwwroot    = 'http://10.5.1.15';"
 
- - name: Adding dataroot
-   lineinfile:
-     path: /var/www/html/config-dist.php
-     regexp: "dataroot"
-     line: "$CFG->dataroot    = '/moodle/moodledata';"
+- name: Adding dataroot
+  lineinfile:
+    path: /var/www/html/config-dist.php
+    regexp: "dataroot"
+    line: "$CFG->dataroot    = '/moodle/moodledata';"
 
 - name: Copying config
   shell: |
