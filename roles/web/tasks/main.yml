@@ -12,6 +12,7 @@
       - php-pecl-zip
       - php-json
       - php-xml
+      - php-intl
       - python36
     state: present
     update_cache: yes
