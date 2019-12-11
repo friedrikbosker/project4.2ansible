@@ -20,7 +20,7 @@
   shell: |
     wget https://files.phpmyadmin.net/phpMyAdmin/4.9.2/phpMyAdmin-4.9.2-english.tar.gz
     tar -zxvf phpMyAdmin-4.9.2-english.tar.gz
-    mv phpMyAdmin-4.9.2-english /usr/share/phpMyAdmin
+    mv -vn phpMyAdmin-4.9.2-english /usr/share/phpMyAdmin
     
 - name: Configuring PhpMyAdmin
   shell: |
