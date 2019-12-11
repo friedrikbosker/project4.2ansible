@@ -36,3 +36,8 @@
     sudo tar -zxvf /tmp/moodle-latest-38.tgz -C /var/www/html
     mv /var/www/html/moodle/* /var/www/html
     chown -R apache:apache /var/www/
+    mkdir -p /moodle/moodledata
+    chown -R apache:apache /moodle
+    chmod -R 777 /moodle
+    semanage fcontext -a -t httpd_sys_rw_content_t "/moodle/moodledata(/.*)?"
+    restorecon -R /moodle/moodledata
