@@ -27,7 +27,7 @@
 - name: Add blowfish key
   lineinfile:
     path: /usr/share/phpMyAdmin/config.inc.php
-    regexp: "^\$cfg\[\'blowfish_secret\'\]"
+    regexp: "blowfish_secret"
     line: "$cfg['blowfish_secret'] = 'tu.88b/RHS-5K0Ut5fysBLUX:G;OFXtG';"
     
 
