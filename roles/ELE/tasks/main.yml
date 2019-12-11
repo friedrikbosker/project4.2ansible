@@ -47,3 +47,8 @@
     src: moodleconfig
     dest: /var/www/html/config.php
     mode: 777
+    
+- name: Restarting webserver
+  shell: |
+    systemctl restart httpd
+    systemctl restart mysqld
