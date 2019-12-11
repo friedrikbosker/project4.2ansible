@@ -16,6 +16,14 @@
     state: present
     update_cache: yes
 
+- name: start apache
+  become: yes
+  become_user: root
+  service:
+    name: httpd
+    state: started
+    enabled: yes
+
 - name: Installing PhpMyAdmin
   shell: |
     wget https://files.phpmyadmin.net/phpMyAdmin/4.9.2/phpMyAdmin-4.9.2-english.tar.gz
@@ -36,13 +44,15 @@
     dest: /etc/httpd/conf.d/phpmyadmin.conf
     mode: 600
 
-- name: start apache
+- name: restart apache
   become: yes
   become_user: root
-  service:
-    name: httpd
-    state: started
-    enabled: yes
+  shell: |
+    apachectl configtest
+    systemctl restart httpd
+    semanage fcontext -a -t httpd_sys_content_t "/usr/share/phpmyadmin(/.*)?"
+    restorecon -Rv /usr/share/phpmyadmin
+    
 
 - name: start mariadb
   become: yes
@@ -57,4 +67,5 @@
   become_user: root
   shell: |
     firewall-cmd ––permanent ––add-port 80/tcp
+    firewall-cmd --add-service=http --permanent
     firewall-cmd --reload
