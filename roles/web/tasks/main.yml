@@ -21,16 +21,12 @@
     wget https://files.phpmyadmin.net/phpMyAdmin/4.9.2/phpMyAdmin-4.9.2-english.tar.gz
     tar -zxvf phpMyAdmin-4.9.2-english.tar.gz
     mv -vn phpMyAdmin-4.9.2-english /usr/share/phpMyAdmin
-    cp -pr /usr/share/phpMyAdmin/config.sample.inc.php /usr/share/phpMyAdmin/config.inc.php
     
-- name: Adding Blowfish secret
-  lineinfile:
-    path: /usr/share/phpMyAdmin/config.inc.php
-    regexp: '(?:\$cfg\[\'blowfish_secret\'\]\ \=\ \'\'\;)'
-    line: '$cfg['blowfish_secret'] = 'tu.88b/RHS-5K0Ut5fysBLUX:G;OFXtG';'
-    owner: root
-    group: root
-    mode: 0644
+- name: Configuring PhpMyAdmin
+  shell: |
+    cp -pr /usr/share/phpMyAdmin/config.sample.inc.php /usr/share/phpMyAdmin/config.inc.php
+    sed -i -E "s/(?:\$cfg\[\'blowfish_secret\'\]\ \=\ \'\'\;)/$cfg['blowfish_secret'] = 'tu.88b/RHS-5K0Ut5fysBLUX:G;OFXtG';/g" /usr/share/phpMyAdmin/config.inc.php
+    
 
 - name: start apache
   become: yes
