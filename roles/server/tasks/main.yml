@@ -45,7 +45,7 @@
   lineinfile:
     path: /etc/filebeat/filebeat.yml
     regexp: '^\ \ \#hosts:\ \[\"localhost\:5044\"\]'
-    line: 'hosts: ["10.5.1.13:5044"]'
+    line: '  hosts: ["10.5.1.13:5044"]'
     owner: root
     group: root
     mode: 0644     
