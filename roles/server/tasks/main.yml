@@ -17,7 +17,7 @@
 - name: Edit filebeat.yml
   lineinfile:
     path: /etc/filebeat/filebeat.yml
-    regexp: '^output/.elasticsearch/:'
+    regexp: '^output\.elasticsearch\:'
     line: '#output.elasticsearch:'
     owner: root
     group: root
@@ -26,7 +26,7 @@
 - name: Edit filebeat.yml
   lineinfile:
     path: /etc/filebeat/filebeat.yml
-    regexp: '^/ / hosts:/ /[/"localhost/:9200/]'
+    regexp: '^\ \ hosts:\ \[\"localhost\:9200\"\]'
     line: '#output.elasticsearch: [localhost:9200]'
     owner: root
     group: root
@@ -35,7 +35,7 @@
 - name: Edit filebeat.yml
   lineinfile:
     path: /etc/filebeat/filebeat.yml
-    regexp: '^/#output/.logstash/:'
+    regexp: '^\#output\.logstash\:'
     line: 'output.logstash:'
     owner: root
     group: root
@@ -44,7 +44,7 @@
 - name: Edit filebeat.yml
   lineinfile:
     path: /etc/filebeat/filebeat.yml
-    regexp: '^/ / /#hosts:/ /[/"localhost/:5044/]'
+    regexp: '^\ \ \#hosts:\ \[\"localhost\:5044\"\]'
     line: 'hosts: ["10.5.1.13:5044"]'
     owner: root
     group: root
@@ -54,5 +54,5 @@
   shell : |
     filebeat modules enable system
     systemctl enable filebeat
-    systemtl start filebeat
+    systemctl start filebeat
     
