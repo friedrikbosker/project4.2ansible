@@ -25,35 +25,12 @@
     state: started
     enabled: yes
 
-- name: Installing PhpMyAdmin
-  shell: |
-    wget https://files.phpmyadmin.net/phpMyAdmin/4.9.2/phpMyAdmin-4.9.2-english.tar.gz
-    tar -zxvf phpMyAdmin-4.9.2-english.tar.gz
-    mv -vn phpMyAdmin-4.9.2-english /usr/share/phpMyAdmin
-    cp -pr /usr/share/phpMyAdmin/config.sample.inc.php /usr/share/phpMyAdmin/config.inc.php
-    
-
-- name: Add blowfish key
-  lineinfile:
-    path: /usr/share/phpMyAdmin/config.inc.php
-    regexp: "blowfish_secret"
-    line: "$cfg['blowfish_secret'] = 'tu.88b/RHS-5K0Ut5fysBLUX:G;OFXtG';"
-    
-- name: load phpconfig
-  template:
-    src: phpconfig
-    dest: /etc/httpd/conf.d/phpmyadmin.conf
-    mode: 600
-
 - name: restart apache
   become: yes
   become_user: root
   shell: |
     apachectl configtest
     systemctl restart httpd
-    semanage fcontext -a -t httpd_sys_content_t "/usr/share/phpMyAdmin(/.*)?"
-    restorecon -Rv /usr/share/phpMyAdmin
-    
 
 - name: start mariadb
   become: yes
