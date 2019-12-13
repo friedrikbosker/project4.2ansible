@@ -7,11 +7,11 @@
     - thunderbird
     state: present
 
-- name: Installing LibreOffice
-  shell: |
-    wget https://download.documentfoundation.org/libreoffice/stable/6.3.4/rpm/x86_64/LibreOffice_6.3.4_Linux_x86-64_rpm.tar.gz -P /tmp
-    tar -xvf LibreOffice_6.1.3* -C tmp
-    yum localinstall RPMS/*.rpm
+#- name: Installing LibreOffice
+#  shell: |
+#    wget https://download.documentfoundation.org/libreoffice/stable/6.3.4/rpm/x86_64/LibreOffice_6.3.4_Linux_x86-64_rpm.tar.gz -P /tmp
+#    tar -xvf /tmp/LibreOffice_6.3.4_Linux_x86-64_rpm.tar.gz -C /tmp
+#    yum localinstall /tmp/LibreOffice_6.3.4.2_Linux_x86-64_rpm/RPMS/*
     
 - name: Setting the hostname
   shell: |
