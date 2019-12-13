@@ -1,10 +1,17 @@
 - name: Install MariaDB
   yum:
+<<<<<<< HEAD
      - mariadb-server
      - mariadb
      - python36
      - python3-PyMySQL
   state: present
+=======
+    name:
+      - mariadb-server
+      - mariadb
+    state: present
+>>>>>>> 70a7016acb0fc4064356b7af59a324e658c01d73
   
 - name: start mariadb
   become: yes

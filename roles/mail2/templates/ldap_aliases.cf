@@ -1,5 +1,5 @@
-server_host = g05-ipa.groep5uvd.nl
-search_base = cn=accounts,dc=groep5uvd,dc=nl
+server_host = g05-ipa.groep5uvd.net
+search_base = cn=accounts,dc=groep5uvd,dc=net
 query_filter = (mail=%s)
 result_attribute = uid
 bind = no
