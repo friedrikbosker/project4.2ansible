@@ -4,6 +4,7 @@
     - bind-utils
     - freeipa-client
     - nfs-utils
+    - thunderbird
     state: present
 
 - name: Setting the hostname
