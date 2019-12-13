@@ -4,5 +4,5 @@ currentDate=`date +%d.%m.%Y-%H.%M`
 currentDay=`date +%d.%m.%Y`
 currentTime=`date +%H.%M`
 
-mysqldump moodle > /tmp/${currentDay}-${currentTime}-${currentDate}
+mysqldump moodle > /tmp/moodle-${currentDay}-${currentTime}-${currentDate}.sql
 rsync -a -e "ssh -i /root/.ssh/pkey" /tmp/moodle-${currentDay}-${currentTime}-${currentDate}.sql root@10.5.1.17:/backups
