@@ -1,8 +1,9 @@
 - name: Install MariaDB
   yum:
-     - mariadb-server
-     - mariadb
-  state: present
+    name:
+      - mariadb-server
+      - mariadb
+    state: present
   
 - name: start mariadb
   become: yes
