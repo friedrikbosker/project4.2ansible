@@ -98,12 +98,6 @@
     systemctl enable freshclam
     systemctl start clamd@scan
     systemctl start freshclam
-
-- name: Install Chrony
-  yum: 
-    name:
-    - chrony
-    state: present
     
 - name:
   shell: |
