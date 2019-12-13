@@ -3,6 +3,7 @@
     name:
       - python36
       - python3-PyMySQL
+      - php-ldap
     state: present
     update_cache: yes
 
