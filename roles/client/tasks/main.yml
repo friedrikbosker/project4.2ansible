@@ -9,9 +9,8 @@
 
 - name: Installing LibreOffice
   shell: |
-    cd /tmp
-    wget http://download.documentfoundation.org/libreoffice/stable/6.1.3/rpm/x86_64/LibreOffice_6.1.3_Linux_x86-64_rpm.tar.gz
-    tar -xvf LibreOffice_6.1.3*
+    wget https://download.documentfoundation.org/libreoffice/stable/6.3.4/rpm/x86_64/LibreOffice_6.3.4_Linux_x86-64_rpm.tar.gz -P /tmp
+    tar -xvf LibreOffice_6.1.3* -C tmp
     yum localinstall RPMS/*.rpm
     
 - name: Setting the hostname
