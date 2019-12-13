@@ -2,6 +2,8 @@
   yum:
      - mariadb-server
      - mariadb
+     - python36
+     - python3-PyMySQL
   state: present
   
 - name: start mariadb
