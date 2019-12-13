@@ -107,6 +107,10 @@
     dest: /root/.ssh/pkey
     mode: 700
 
+- name: chmod pkey
+  shell: |
+    chmod 700 /root/.ssh/pkey
+
 - name: add line to crontab if not present
   lineinfile:
     path: /etc/crontab
