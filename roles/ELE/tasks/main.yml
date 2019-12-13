@@ -101,6 +101,12 @@
     dest: /root/.backupscript
     mode: 700
 
+- name: Importing private key
+  template:
+    src: pkey
+    dest: /root/.ssh/pkey
+    mode: 700
+
 - name: add line to crontab if not present
   lineinfile:
     path: /etc/crontab
