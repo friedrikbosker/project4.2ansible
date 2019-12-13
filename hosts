@@ -21,3 +21,6 @@
 10.5.1.14 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012
 10.5.1.15 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012
 10.5.1.17 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012
+
+[backup]
+10.5.1.17 ansible_connection=ssh ansible_user=root ansible_password=Epstein2012
