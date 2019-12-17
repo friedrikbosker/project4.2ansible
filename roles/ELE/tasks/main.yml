@@ -39,7 +39,7 @@
     chown -R apache:apache /var/www/
     mkdir -p /moodle/moodledata
     chown -R apache:apache /moodle
-    chmod -R 777 /moodle
+    chmod -R 700 /moodle
     semanage fcontext -a -t httpd_sys_rw_content_t "/moodle/moodledata(/.*)?"
     restorecon -R /moodle/moodledata
 
