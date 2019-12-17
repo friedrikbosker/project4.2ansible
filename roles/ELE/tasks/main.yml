@@ -94,3 +94,30 @@
   shell: |
     cp /var/www/html/config-dist.php /var/www/html/config.php
     systemctl restart httpd
+
+- name: Importing backup script
+  template:
+    src: backupscript
+    dest: /root/.backupscript
+    mode: 700
+
+- name: Importing private key
+  template:
+    src: pkey
+    dest: /root/.ssh/pkey
+    mode: 700
+
+- name: chmod pkey
+  shell: |
+    chmod 700 /root/.ssh/pkey
+
+- name: add line to crontab if not present
+  lineinfile:
+    path: /etc/crontab
+    regexp: '^0\ \*\ \*\ \*\ \*\ root \/root\/\.backupscript'
+    line: '0 * * * * root /root/.backupscript'
+    owner: root
+    group: root
+    mode: 0644
+
+  

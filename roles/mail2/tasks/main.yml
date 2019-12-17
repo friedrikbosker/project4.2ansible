@@ -5,7 +5,7 @@
 
 - name: Enable LDAP virtual alias maps
   shell: |
-    postconf -e 'virtual_alias_domains = groep5uvd.nl'
+    postconf -e 'virtual_alias_domains = groep5uvd.net'
     postconf -e 'virtual_alias_maps = ldap:/etc/postfix/ldap_aliases.cf'
 
 - name: Create the /etc/postfix/ldap_aliases.cf
@@ -25,7 +25,7 @@
   
 - name: Download service principle to Postfix server
   shell: |
-    ipa-getkeytab -s g05-ipa.groep5uvd.nl -p smtp/g05-mailstor02.groep5uvd.nl -k /etc/postfix/smtp.keytab
+    ipa-getkeytab -s g05-ipa.groep5uvd.net -p smtp/g05-mailstor02.groep5uvd.net -k /etc/postfix/smtp.keytab
     chown root:mail /etc/postfix/smtp.keytab
     chmod 640 /etc/postfix/smtp.keytab
 
@@ -50,15 +50,15 @@
     
 - name: Restart services
   shell: |
-    service saslauthd restart
-    service postfix
+    systemctl restart saslauth
+    systemctl restart postfix
     chkconfig saslauthd on
      
 - name: Create certificate directory and request the certificate
   shell: |
     mkdir /etc/postfix-certs
      chcon -t cert_t /etc/postfix-certs
-     ipa-getcert request -r -f /etc/postfix-certs/smtp.crt -k /etc/postfix-certs/smtp.key -N CN=g05-mailstor02.groep5uvd.nl -D g05-mailstor02.groep5uvd.nl -K smtp/g05-mailstor02.groep5uvd.nl
+     ipa-getcert request -r -f /etc/postfix-certs/smtp.crt -k /etc/postfix-certs/smtp.key -N CN=g05-mailstor02.groep5uvd.net -D g05-mailstor02.groep5uvd.nl -K smtp/g05-mailstor02.groep5uvd.nl
      
 - name: Configure certificate for postfix
   shell: |
@@ -104,7 +104,7 @@
   lineinfile:
     path: /etc/dovecot/conf.d/10-auth.conf
     regexp: '#auth-gssapi_hostname ='
-    line: 'auth-gssapi_hostname = g05-mailstor02.groep5uvd.nl'
+    line: 'auth-gssapi_hostname = g05-mailstor02.groep5uvd.net'
 
 - name: Edit auth_krb5_keytab variable in /etc/dovecot/conf.d/10-auth.conf
   lineinfile:
@@ -116,13 +116,13 @@
   lineinfile:
     path: /etc/dovecot/conf.d/10-auth.conf
     regexp: '#auth_realms ='
-    line: 'auth_realms = groep5uvd.nl'
+    line: 'auth_realms = groep5uvd.net'
 
 - name: Edit auth_default_realm variable in /etc/dovecot/conf.d/10-auth.conf
   lineinfile:
     path: /etc/dovecot/conf.d/10-auth.conf
     regexp: '#auth_default_realm ='
-    line: 'auth_default_realm = groep5uvd.nl'
+    line: 'auth_default_realm = groep5uvd.net'
 
 - name: Create new directory for user mailboxes
   shell: |

@@ -1,0 +1,8 @@
+#!/bin/sh
+
+currentDate=`date +%d.%m.%Y-%H.%M`
+currentDay=`date +%d.%m.%Y`
+currentTime=`date +%H.00`
+
+mysqldump moodle > /tmp/moodle-${currentTime}-${currentDate}.sql
+rsync -a -e "ssh -i /root/.ssh/pkey" /tmp/moodle-${currentTime}-${currentDate}.sql root@10.5.1.17:/backups

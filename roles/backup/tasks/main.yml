@@ -1,0 +1,27 @@
+- name: Install MariaDB
+  yum:
+    name:
+      - mariadb-server
+      - mariadb
+      - python36
+      - python3-PyMySQL
+    state: present
+  
+- name: start mariadb
+  become: yes
+  become_user: root
+  service:
+    name: mariadb
+    state: started
+    enabled: yes
+
+- name: Removes anonymous user account for localhost
+  mysql_user:
+    name: ''
+    host: localhost
+    state: absent
+    
+- name: Create backup directory
+  shell: |
+    mkdir /backups
+    chmod 777 /backups
