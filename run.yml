@@ -1,15 +1,25 @@
 - name: apply common to all
-  hosts: all
+  hosts: ELE
   remote_user: root
   become: yes
   gather_facts: false
   roles:
     - common
+    - web
+    - ELE
 
-- name: apply main.yml to siem
-  hosts: 10.5.1.106
-  remote_user: root
-  become: yes
-  gather_facts: false
-  roles:
-    - client  
+#- name: apply main.yml to siem
+#  hosts: 10.5.1.108
+#  remote_user: root
+#  become: yes
+#  gather_facts: false
+#  roles:
+#    - client  
+
+#- name: appyl main.yml to mailstor
+#  hosts: 10.5.1.108
+#  remote_user: root
+#  become: yes
+#  gather_facts: false
+#  roles:
+#    - client

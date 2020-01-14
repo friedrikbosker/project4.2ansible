@@ -82,7 +82,7 @@
   lineinfile:
     path: /var/www/html/config-dist.php
     regexp: "wwwroot"
-    line: "$CFG->wwwroot    = 'http://10.5.1.15';"
+    line: "$CFG->wwwroot    = 'http://10.2.12.145';"
 
 - name: Adding dataroot
   lineinfile:
