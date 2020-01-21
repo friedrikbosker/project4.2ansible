@@ -5,13 +5,21 @@
     - freeipa-client
     - nfs-utils
     - thunderbird
+    - realmd
+    - sssd
+    - oddjob
+    - oddjob-mkhomedir
+    - adcli
+    - samba-common
+    - samba-common-tools
+    - krb5-workstation
     state: present
 
-#- name: Installing LibreOffice
-#  shell: |
-#    wget https://download.documentfoundation.org/libreoffice/stable/6.3.4/rpm/x86_64/LibreOffice_6.3.4_Linux_x86-64_rpm.tar.gz -P /tmp
-#    tar -xvf /tmp/LibreOffice_6.3.4_Linux_x86-64_rpm.tar.gz -C /tmp
-#    yum localinstall /tmp/LibreOffice_6.3.4.2_Linux_x86-64_rpm/RPMS/*
+- name: Installing LibreOffice
+  shell: |
+    wget https://download.documentfoundation.org/libreoffice/stable/6.3.4/rpm/x86_64/LibreOffice_6.3.4_Linux_x86-64_rpm.tar.gz -P /tmp
+    tar -xvf /tmp/LibreOffice_6.3.4_Linux_x86-64_rpm.tar.gz -C /tmp
+    yum localinstall /tmp/LibreOffice_6.3.4.2_Linux_x86-64_rpm/RPMS/*
     
 - name: Setting the hostname
   shell: |
@@ -23,6 +31,12 @@
 - name: Rebooting
   reboot:
 
+- name: Joining domain
+  expect:
+    command: realm join ijsselstreek-university.nl -U Administrator
+    responses:
+     "Password for Administrator:": "Welkom01"
+
 - name: Opening Splunk ports
   shell: |
     firewall-cmd --permanent --add-port 80/tcp
@@ -33,24 +47,6 @@
     firewall-cmd --permanent --add-port 464/udp
     firewall-cmd --permanent --add-port 123/tcp
     firewall-cmd --reload
-
-- name: Adding IPA server to host file
-  lineinfile:
-    path: /etc/hosts
-    regexp: '^10\.5\.1\.12'
-    line: '10.5.1.12 g05-ipa.groep5uvd.net'
-    owner: root
-    group: root
-    mode: 0644
-
-- name: Make sure IPA client is not installed
-  shell: |
-    ipa-client-install --uninstall --unattended
-  ignore_errors: yes
- 
-- name: FreeIpa installation
-  shell: |
-    ipa-client-install --unattended --hostname {{hostname|quote}} --server g05-ipa.groep5uvd.net --domain groep5uvd.net --password Epstein2012 --realm GROEP5UVD.NET -p admin --mkhomedir --force-join
 
 - name: Create share directory
   shell: |
